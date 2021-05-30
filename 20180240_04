@@ -1,0 +1,76 @@
+nclude<stdio.h>
+#include<stdlib.h>
+#pragma warning(disable:4996)
+
+typedef struct Node {
+	int data;
+	struct Node* next;
+}Node;
+typedef struct List {
+	Node* head;
+	int numofData;
+}List;
+Node* getNode() {
+	Node* new = (Node*)malloc(sizeof(Node));
+	new->next = NULL;
+
+	return new;
+}
+List* initList() {
+	List* L = (List*)malloc(sizeof(List));
+	L->head = getNode();
+	L->numofData = 0;
+	return L;
+}
+void insert(List* L, int num) {
+	Node* newNode = getNode();
+	newNode->data = num;
+
+	if (L->head->next == NULL) {
+		newNode->next = NULL;
+		L->head->next = newNode;
+	}
+	else {
+		newNode->next = L->head->next;
+		L->head->next = newNode;
+	}
+}
+void delete(List* L, int number) {
+	Node* cur = L->head;
+	Node* rpos;
+	while (cur->next != NULL) {
+		if (cur->next->data == number) {
+			rpos = cur->next;
+			cur->next = cur->next->next;
+			free(rpos);
+			return;
+		}
+		cur = cur->next;
+	}
+}
+void display(List* L) {
+	Node* cur;
+	cur = L->head->next;
+	printf("%d", cur->data);
+	cur = cur->next;
+}
+
+
+int main() {
+	Node* H = NULL;
+
+	printf("Enter 5 elements in array: ");
+	for (int i = 0; i < 5; i++) {
+		int n;
+		scanf("%d", &n);
+		Insert(n);
+	}
+	printf("Stored element in array: ");
+	Display(H);
+	printf("Enter poss. of element to delete: ");
+	int num;
+	scanf("%d", &num);
+	Delete(H);
+	printf("After deletion element in array: ");
+	Display(H);
+}
